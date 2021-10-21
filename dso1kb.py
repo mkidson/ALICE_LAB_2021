@@ -156,7 +156,7 @@ class Dso:
         global inBuffer
         inBuffer=self.readBytes(10)
         length=len(inBuffer)
-        self.headerlen = 2 + int(inBuffer[1:2].decode())
+        self.headerlen = 2 + int(inBuffer[1:2])
         pkg_length = int(inBuffer[2:self.headerlen]) + self.headerlen + 1 #Block #48000[..8000bytes raw data...]<LF>
         print ("Data transferring...  ")
 
