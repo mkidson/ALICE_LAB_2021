@@ -156,7 +156,7 @@ class Dso:
         global inBuffer
         inBuffer=self.readBytes(10)
         length=len(inBuffer)
-        self.headerlen = 2 + int(inBuffer[1:2])
+        self.headerlen = 2 + int(inBuffer[1:2].decode())
         pkg_length = int(inBuffer[2:self.headerlen]) + self.headerlen + 1 #Block #48000[..8000bytes raw data...]<LF>
         print ("Data transferring...  ")
 
@@ -236,6 +236,7 @@ class Dso:
                 self.info=[[], [], [], []]
 
             self.info[index]=self.read().decode('ascii', errors='ignore').split(';')
+            print(self.info)
             num=len(self.info[index])
             self.info[index][num-1]=self.info[index][num-2] #Convert info[] to csv compatible format.
             self.info[index][num-2]='Mode,Fast'
@@ -251,6 +252,8 @@ class Dso:
             self.hpos[index]=float(sHpos[0].split(',')[1])
             sVunit=[s for s in self.info[index] if "Vertical Units" in s]
             self.vunit[index]=sVunit[0].split(',')[1]
+            print()
+            print(self.info)
             #print sHpos, self.vdiv[index],  self.dt[index],  self.hpos[index], sDv
         self.getBlockData()
         self.points_num=len(inBuffer[self.headerlen:-1])//2   #Calculate sample points length.
