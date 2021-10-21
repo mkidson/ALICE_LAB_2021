@@ -29,8 +29,6 @@ dso.write(':DISP:OUTP?\n')                 #Send command to get image from DSO.
 # dso.write(':DISP:PNGOutput?\n')            #Send command to get image from DSO.
 dso.getBlockData()
 dso.ImageDecode(1)
-# self.showImage()
-# plt.tight_layout(True)
 
 plt.imshow(dso.im)
 # plt.show()
