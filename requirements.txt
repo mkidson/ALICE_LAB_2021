@@ -1,4 +1,5 @@
 matplotlib
+numpy
 PyQt5
 Pillow
 PySerial

@@ -10,7 +10,7 @@ import dso1kb
 # port=com.scanComPort()
 
 #Connecting to a DSO.
-dso=dso1kb.Dso("10.10.0.77:3001")
+dso=dso1kb.Dso("10.10.0.20:3001")
 #dso=dso1kb.Dso("127.0.0.1:3001")
 
 # for i in range(1,5):
@@ -33,4 +33,6 @@ dso.ImageDecode(1)
 # plt.tight_layout(True)
 
 plt.imshow(dso.im)
-plt.show()
+# plt.show()
+saveName = str(input('Enter the name the screenshot will be saved under: '))
+plt.savefig('screenshots/')
