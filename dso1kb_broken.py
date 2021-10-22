@@ -6,19 +6,19 @@ Copyright:
 ----------------------------------------------------------------------
 dso1kb is Copyright (c) 2014 Good Will Instrument Co., Ltd All Rights Reserved.
 
-This program is free software; you can redistribute it and/or modify it under the terms 
-of the GNU Lesser General Public License as published by the Free Software Foundation; 
+This program is free software; you can redistribute it and/or modify it under the terms
+of the GNU Lesser General Public License as published by the Free Software Foundation;
 either version 2.1 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
-without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 See the GNU Lesser General Public License for more details.
 
-You can receive a copy of the GNU Lesser General Public License from 
+You can receive a copy of the GNU Lesser General Public License from
 http://www.gnu.org/
 
 Note:
-dso1kb uses third party software which is copyrighted by its respective copyright holder. 
+dso1kb uses third party software which is copyrighted by its respective copyright holder.
 For details see the copyright notice of the individual package.
 
 ----------------------------------------------------------------------
@@ -29,9 +29,9 @@ Module imported:
   1. PIL 1.1.7
   2. Numpy 1.8.0
 
-Version: 1.03
+Version: 1.01
 
-Modified on APR 01 2020
+Created on JUL 12 2018
 
 Author: Kevin Meng
 """
@@ -41,8 +41,7 @@ from PIL import Image
 from struct import unpack
 import struct
 import numpy as np
-import io, os, sys, time, platform
-import hexdump 
+import io, os, sys, time, platform, re
 
 __version__ = "1.01" #dso1kb module's version.
 
@@ -97,37 +96,52 @@ class Dso:
         self.hpos=[[], [], [], []]
         self.ch_list=[]
         self.info=[[], [], [], []]
+        self.header=''
+        self.data=b''
+        self.temp=[]
         generate_lut()
 
-    def connect(self, str):
-        if(str.count('.') == 3 and str.count(':') == 1): #Check if str is ip address or not.
+    def connect(self, dev):
+
+        if (dev is None or dev=="") and 'interface' in self.config:
+            dev = self.config['interface']
+
+        # Connect to USB serial devices
+        if re.match("^(/dev/tty|COM\d|/dev/cu\.).*", dev):
             try:
-                self.IO=lan(str)
-            except:
-                print ('Open LAN port failed!')
-                return
-        elif('/dev/ttyACM' in str) or ('COM' in str) or ('/dev/cu.' in str):
-            # str is COM port.
-            try:
-                print ("Opening serial port", str)
-                self.IO=com(str)
+                print ("Opening serial port", dev)
+                self.IO=com(dev)
             except:
                 print ('Open COM port failed!')
                 return
             self.IO.clearBuf()
+
+            if(self.osname=='win10') and ('COM' in str):
+                #Prevent data loss on Win 10.
+                self.IO.write(':USBDelay ON\n')
+                print ('Send :USBDelay ON')
+
+        # Pretty much everything else: connect via network
+        elif re.match("[a-zA-Z0-9\.]+(:\d+)?", dev):
+            try:
+                self.IO=lan(dev)
+            except:
+                print ('Open LAN port failed!')
+                return
+
         else:
-            print ("ERROR: unknown device: ", str)
+            print ("ERROR: unknown device: ", dev)
             return
+
         self.write=self.IO.write
         self.read=self.IO.read
         self.readBytes=self.IO.readBytes
         self.closeIO=self.IO.closeIO
         self.write('*IDN?\n')
-        model_name=self.read().decode().split(',')[1]
-        print ('%s connected to %s successfully!'%(model_name, str))
-        if(self.osname=='win10') and ('COM' in str):
-            self.write(':USBDelay ON\n')  #Prevent data loss on Win 10.
-            print ('Send :USBDelay ON')
+        # model_name=self.read().decode().split(',')[1]
+        model_name=self.readBytes(256).decode().split(',')[1]
+        print (f'{model_name} connected to {dev} successfully!')
+
         if(model_name in sModelList[0]):
             self.chnum=2   #Got a 2 channel DSO.
             self.connection_status=1
@@ -141,19 +155,13 @@ class Dso:
             print ('Device not found!')
             return
 
-        if not os.path.exists('port.config'):
-            f = open('port.config', 'w')
-            f.write(str)
-            f.close()
-
-    def getBlockData(self): #Used to get image data.
+    def getBlockData(self, data): #Used to get image data.
         global inBuffer
-        #print("TEST",self.readBytes(20518))
-        #inBuffer=self.readBytes(10)
-        inBuffer = self.read()
+        # inBuffer=data[:10]
         length=len(inBuffer)
-        self.headerlen = 2 + int(inBuffer[1:2].decode())
-        pkg_length = int(inBuffer[2:self.headerlen]) + self.headerlen + 1 #Block #48000[..8000bytes raw data...]<LF>
+        self.headerlen = 2 + int(data[1:2].decode())
+        pkg_length = int(data[2:self.headerlen]) + self.headerlen + 1 #Block #48000[..8000bytes raw data...]<LF>
+            
         print ("Data transferring...  ")
 
         pkg_length=pkg_length-length
@@ -225,39 +233,17 @@ class Dso:
         if(self.checkAcqState(ch)== -1):
             return
         self.write(":ACQ%d:MEM?\n" % ch)                    #Write command(get raw datas) to DSO.
+
         index=len(self.ch_list)
         if(header_on == True):
             if(index==0): #Getting first waveform => reset self.info.
                 self.info=[[], [], [], []]
-            
-            #print(self.read())
-            rDat = self.read()
-            #print("RDAT",rDat)
-            f = open("dataRawCh%s" % ch,'wb')
-            f.write(rDat)
-            f.close()
-            
-#############
-            bArr = bytearray(rDat)
-            #print("BARR",bArr)
-            #print(bArr)
-            pos = bArr.find(b'\n')
-            header = bArr[0:pos]
-            dataS = bArr[pos:-1]
-            dataS = bArr[pos+8:-1]
-            #print(dataS)
-           
-#############
 
-            #self.info[index]=self.read().decode('ascii').split(";") #original
-            self.info[index]=header.decode('ascii').split(";") #solution
-
-            #print(self.info[index])
-            #print(self.read().decode('ascii'))
-
+            # Try decode a subset of self.read()
+            temp=self.read().split(b'\n')
+            self.info[index]=self.temp[0].decode('ascii')
+            header=self.temp[1]
             num=len(self.info[index])
-            print(num)
-
             self.info[index][num-1]=self.info[index][num-2] #Convert info[] to csv compatible format.
             self.info[index][num-2]='Mode,Fast'
             sCh = [s for s in self.info[index] if "Source" in s]
@@ -273,15 +259,10 @@ class Dso:
             sVunit=[s for s in self.info[index] if "Vertical Units" in s]
             self.vunit[index]=sVunit[0].split(',')[1]
             #print sHpos, self.vdiv[index],  self.dt[index],  self.hpos[index], sDv
-        
-       # self.getBlockData()
-        #self.points_num=len(inBuffer[self.headerlen:-1])//2   #Calculate sample points length.
-        #self.iWave[index] = unpack('>%sh' % self.points_num, inBuffer[self.headerlen:-1])
-        
-        self.points_num = 10000  #Calculate sample points length.
-        self.iWave[index] = unpack('>%sh' % self.points_num, dataS)
-
-        #del inBuffer
+        self.getBlockData(header)
+        self.points_num=len(inBuffer[self.headerlen:-1])//2   #Calculate sample points length.
+        self.iWave[index] = unpack('>%sh' % self.points_num, inBuffer[self.headerlen:-1])
+        del inBuffer
         return index #Return the buffer index.
 
     def checkAcqState(self,  ch):
@@ -304,27 +285,18 @@ class Dso:
         return 0
 
     def convertWaveform(self, ch, factor):
-        print(self.vdiv)
-        chPos = ch-1
-        dv=self.vdiv[chPos]/25
-        print("DV",dv)
+        dv=self.vdiv[ch]/25
         if(factor==1):
             num=self.points_num
             fWave=[0]*num
             for x in range(num):           #Convert 16 bits signed to floating point number.
-                fWave[x]=float(self.iWave[chPos][x])*dv 
-
-            f = open("dataPlottableCh%s" % ch,'w')
-            f.write(str(fWave))
-            f.close()
-
-        
+                fWave[x]=float(self.iWave[ch][x])*dv
         else: #Reduced to helf points.
             num=self.points_num/factor
             fWave=[0]*num
             for x in range(num):           #Convert 16 bits signed to floating point number.
                 i=factor*x
-                fWave[x]=float(self.iWave[chPos][i])*dv
+                fWave[x]=float(self.iWave[ch][i])*dv
         return fWave
 
     def readRawDataFile(self,  fileName):
@@ -397,7 +369,7 @@ class Dso:
                     self.info[0].append(info[x])
                 self.info[0].append('Mode,Fast') #Convert info[] to csv compatible format.
                 self.info[0].append(info[23])
-                self.iWave[0] = np.array(unpack('<%sh' % (len(wave)/2), wave)) #!!!!
+                self.iWave[0] = np.array(unpack('<%sh' % (len(wave)/2), wave))
                 for x in range(num):            #Convert 16 bits signed number to floating point number.
                     self.iWave[0][x]-=vpos
             del wave
