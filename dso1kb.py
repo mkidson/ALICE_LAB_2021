@@ -97,6 +97,9 @@ class Dso:
         self.hpos=[[], [], [], []]
         self.ch_list=[]
         self.info=[[], [], [], []]
+        self.write(':ACQ:RECO?\n')
+        recordLengthTemp=self.read().decode()[:-1]
+        self.recordLength=float(recordLengthTemp)
         generate_lut()
 
     def connect(self, str):
@@ -278,7 +281,7 @@ class Dso:
         #self.points_num=len(inBuffer[self.headerlen:-1])//2   #Calculate sample points length.
         #self.iWave[index] = unpack('>%sh' % self.points_num, inBuffer[self.headerlen:-1])
         
-        self.points_num = 10000  #Calculate sample points length.
+        self.points_num = self.recordLength  #Calculate sample points length.
         self.iWave[index] = unpack('>%sh' % self.points_num, dataS)
 
         #del inBuffer
