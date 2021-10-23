@@ -170,35 +170,37 @@ class Dso:
             f.write(dev)
             f.close()
         
-    def getBlockData(self): #Used to get image data.
+    def getBlockData(self): # Gets image data
         global inBuffer
-        inBuffer=self.readBytes(10)
-        length=len(inBuffer)
+        #print("TEST",self.readBytes(20518))
+        #inBuffer=self.readBytes(10)
+        inBuffer = self.read()
+        length = len(inBuffer)
         self.headerlen = 2 + int(inBuffer[1:2].decode())
         pkg_length = int(inBuffer[2:self.headerlen]) + self.headerlen + 1 #Block #48000[..8000bytes raw data...]<LF>
         print ("Data transferring...  ")
 
-        pkg_length=pkg_length-length
+        pkg_length = pkg_length-length
         while True:
-            print('%8d\r' %pkg_length),
-            if(pkg_length==0):
+            print(f'{pkg_length}\r')
+            if (pkg_length == 0):
                 break
             else:
-                if(pkg_length > 100000):
-                    length=100000
+                if (pkg_length > 100000):
+                    length = 100000
                 else:
-                    length=pkg_length
+                    length = pkg_length
                 try:
-                    buf=self.readBytes(length)
+                    buf = self.readBytes(length)
                 except:
-                    print ('KeyboardInterrupt!')
+                    print('KeyboardInterrupt!')
                     self.clrBuf()
                     self.closeIO()
                     sys.exit(0)
-                num=len(buf)
-                inBuffer+=buf
-                pkg_length=pkg_length-num
-            
+                num = len(buf)
+                inBuffer += buf
+                pkg_length = pkg_length-num
+
     def ImageDecode(self, type):
         if (type):  # 1 for RLE decode, 0 for PNG decode.
             raw_data=[]
