@@ -170,13 +170,12 @@ class Dso:
             f.write(dev)
             f.close()
         
-    def getBlockData(self, data): #Used to get image data.
+    def getBlockData(self): #Used to get image data.
         global inBuffer
-        # inBuffer=data[:10]
+        inBuffer=self.readBytes(10)
         length=len(inBuffer)
-        self.headerlen = 2 + int(data[1:2].decode())
-        pkg_length = int(data[2:self.headerlen]) + self.headerlen + 1 #Block #48000[..8000bytes raw data...]<LF>
-            
+        self.headerlen = 2 + int(inBuffer[1:2].decode())
+        pkg_length = int(inBuffer[2:self.headerlen]) + self.headerlen + 1 #Block #48000[..8000bytes raw data...]<LF>
         print ("Data transferring...  ")
 
         pkg_length=pkg_length-length
@@ -199,7 +198,7 @@ class Dso:
                 num=len(buf)
                 inBuffer+=buf
                 pkg_length=pkg_length-num
-
+            
     def ImageDecode(self, type):
         if (type):  # 1 for RLE decode, 0 for PNG decode.
             raw_data=[]
