@@ -84,7 +84,9 @@ def genereate_lut():
         lu_table.append(pixel888)
 
 class Dso:
-    def __init__(self, interface):
+    def __init__(self, interface, suppressPrint):
+        if suppressPrint:
+            sys.stdout = open(os.devnull, 'w')
         if (os.name == 'posix'): #unix
             if (os.uname()[1] == 'raspberrypi'):
                 self.osname = 'pi'
