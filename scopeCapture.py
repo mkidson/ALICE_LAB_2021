@@ -37,7 +37,7 @@ now = datetime.datetime.now()
 nowString = now.strftime('%Y.%m.%d.%H.%M.%S')
 
 # Makes a new directory for the data. You will need to change the path to this for when you save data
-os.system(f'mkdir run_{args.run}') #~/prac2021/data/oscilloscopeData/
+os.system(f'mkdir ~/prac2021/data/oscilloscopeData/run_{args.run}')
 
 # Gets the raw data from the oscilloscope, which then gets saved to a variable in the dso object
 dso.getRawData(True, 1)
@@ -53,4 +53,4 @@ waveform.append(dso.convertWaveform(3, 1))
 
 waveform = np.array(waveform)
 
-np.savetxt(f'run_{args.run}/{nowString}.csv', waveform, header=nowString, delimiter=',') #~/prac2021/data/oscilloscopeData/
+np.savetxt(f'~/prac2021/data/oscilloscopeData/run_{args.run}/{nowString}.csv', waveform, header=nowString, delimiter=',')
