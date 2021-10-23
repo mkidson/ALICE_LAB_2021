@@ -289,8 +289,9 @@ class Dso:
         pointsByte = dataS[2:2+dataInfo]
         self.points_num = int(pointsByte.decode())/2
         print(self.points_num)
+        print(dataS)
         dataS = dataS[2+dataInfo:-1]
-        print(len(dataS))
+        print(dataS)
         self.iWave[index] = unpack(f'>{int(self.points_num)}h', dataS)
         
         return index
