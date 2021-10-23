@@ -53,4 +53,4 @@ waveform.append(dso.convertWaveform(3, 1))
 
 waveform = np.array(waveform)
 
-np.savetxt(f'scope_data_{args.run}/{nowString}.csv', waveform, header=nowString)
+np.savetxt(f'run_{args.run}/{nowString}.csv', waveform, header=nowString) #~/prac2021/data/oscilloscopeData/
