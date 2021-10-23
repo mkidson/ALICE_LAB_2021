@@ -2,7 +2,7 @@
 
 from gw_com_1kb import com
 from gw_lan import lan
-import dso1kb
+import dso1kb_1
 import matplotlib.pyplot as plt
 
 #Check interface according to config file or command line argument.

@@ -236,16 +236,14 @@ class Dso:
             #print(self.read())
             rDat = self.read()
             #print("RDAT",rDat)
-            f = open("dataRawCh%s" % ch,'wb')
-            f.write(rDat)
-            f.close()
+            # f = open("dataRawCh%s" % ch,'wb')
+            # f.write(rDat)
+            # f.close()
             
 #############
             bArr = bytearray(rDat)
-            #print("BARR",bArr)
-            #print(bArr)
-            pos = bArr.find(b'\n')
-            header = bArr[0:pos]
+            bArrSplit = bArr.split(b'\n')
+            header = bArrSplit[0]
             dataS = bArr[pos:-1]
             dataS = bArr[pos+8:-1]
             #print(dataS)

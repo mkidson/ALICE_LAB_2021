@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 
 from gw_com_1kb import com
 from gw_lan import lan
-import dso1kb
+import dso1kb_1
 
 #Connecting to a DSO.
-dso=dso1kb.Dso("10.10.0.20:3001")
+dso=dso1kb_1.Dso("10.10.0.20:3001")
 
 # for i in range(1,5):
 #     print(i, dso.isChannelOn(i))

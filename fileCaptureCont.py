@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from gw_lan import lan
-import dso1kb
+import dso1kb_1
 import datetime
 import os
 import argparse
@@ -31,7 +31,7 @@ if args.printargs:
 
 def take_event():
     # creates a Dso object, which is basically a representation of the oscilloscope
-    dso=dso1kb.Dso("10.10.0.20:3001")
+    dso=dso1kb_1.Dso("10.10.0.20:3001")
     now = datetime.datetime.now()
 
     # triggers a single event in the TRD
