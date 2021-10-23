@@ -264,22 +264,22 @@ class Dso:
 
             self.info[index] = header.decode('ascii').split(';')
             num = len(self.info[index])
-            print(f'Number of elements in the header: {num}')
+            # print(f'Number of elements in the header: {num}')
 
             self.info[index][num-1] = self.info[index][num-2]
             self.info[index][num-2] = 'Mode,Fast'
             sCh = [s for s in self.info[index] if 'Source' in s]
             self.ch_list.append(sCh[0].split(',')[1])
             sDt = [s for s in self.info[index] if 'Sampling Period' in s]
-            self.dt.append(sDt[0].split(',')[1])
+            self.dt[index] = float(sDt[0].split(',')[1])
             sDv = [s for s in self.info[index] if 'Vertical Scale' in s]
-            self.vdiv.append(sDv[0].split(',')[1])
+            self.vdiv[index] = float(sDv[0].split(',')[1])
             sVpos = [s for s in self.info[index] if 'Vertical Position' in s]
-            self.vpos.append(sVpos[0].split(',')[1])
+            self.vpos[index] = float(sVpos[0].split(',')[1])
             sHpos = [s for s in self.info[index] if 'Horizontal Position' in s]
-            self.hpos.append(sHpos[0].split(',')[1])
+            self.hpos[index] = float(sHpos[0].split(',')[1])
             sVunit = [s for s in self.info[index] if 'Vertical Units' in s]
-            self.vunit.append(sVunit[0].split(',')[1])
+            self.vunit[index] = sVunit[0].split(',')[1]
         
         else:
             dataS = self.read()
@@ -288,9 +288,7 @@ class Dso:
         dataInfo = int(dataInfoHeader.decode()[1])
         pointsByte = dataS[2:2+dataInfo]
         self.points_num = int(pointsByte.decode())/2
-        print(self.points_num)
         dataS = dataS[2+dataInfo:]
-        print(len(dataS))
         self.iWave[index] = unpack(f'>{int(self.points_num)}h', dataS)
         
         return index
