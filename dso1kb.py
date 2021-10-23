@@ -289,7 +289,11 @@ class Dso:
         pointsByte = dataS[2:2+dataInfo]
         self.points_num = int(int(pointsByte.decode())/2)
         dataS = dataS[2+dataInfo:]
-        self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
+        try:
+            self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
+        except:
+            print('Buffer wrong size, saving all zeros')
+            self.iWave[index] = unpack(f'>{self.points_num}h', bytearray(self.points_num))
         
         return index
     
@@ -313,10 +317,10 @@ class Dso:
         return 0
     
     def convertWaveform(self, ch, factor):
-        print(self.vdiv)
+        # print(self.vdiv)
         chPos = ch-1
         dv = self.vdiv[chPos]/25
-        print('DV', dv)
+        # print('DV', dv)
         if (factor == 1):
             num = self.points_num
             fWave = [0]*num
