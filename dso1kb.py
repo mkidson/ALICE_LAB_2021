@@ -205,7 +205,7 @@ class Dso:
         if (type):  # 1 for RLE decode, 0 for PNG decode.
             raw_data=[]
             # Convert 8 bits array to 16 bits array.
-            data = unpack(f'<{len(inBuffer[self.headerlen:-1])//2:s}H', inBuffer[self.headerlen:-1])
+            data = unpack(f'<{len(inBuffer[self.headerlen:-1])//2}H', inBuffer[self.headerlen:-1])
             l = len(data)
             if( l%2 != 0): # Ignore reserved data.
                 l -= 1
@@ -285,7 +285,7 @@ class Dso:
         dataInfo = int(dataInfoHeader[1].decode('ascii'))
         self.points_num = int(dataS[2:2+dataInfo].decode('ascii'))/2
         dataS = dataS[2+dataInfo:-1]
-        self.iWave[index] = unpack(f'>{self.points_num:s}h', dataS)
+        self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
         
         return index
     
@@ -401,7 +401,7 @@ class Dso:
                     self.info[0].append(info[x])
                 self.info[0].append('Mode,Fast') #Convert info[] to csv compatible format.
                 self.info[0].append(info[23])
-                self.iWave[0] = np.array(unpack(f'<{len(wave)/2:s}h', wave)) #!!!!
+                self.iWave[0] = np.array(unpack(f'<{len(wave)/2}h', wave)) #!!!!
                 for x in range(num): #Convert 16 bits signed number to floating point number.
                     self.iWave[0][x] -= vpos
             del wave
@@ -414,7 +414,7 @@ class Dso:
             for x in range(1, 24):
                 str = info[x].split(',')
                 for ch in range(count):
-                    self.info[ch].append(f'{2*ch:s}, {2*ch+1:s}')
+                    self.info[ch].append(f'{2*ch}, {2*ch+1}')
             str = info[24].split(',')
             for ch in range(count):
                 self.info[ch].append(str[2*ch])
