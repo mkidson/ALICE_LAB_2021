@@ -262,6 +262,10 @@ class Dso:
             header = bArrSplit[0]
             dataS = bArrSplit[1]
 
+            print(type(bArrSplit))
+            print(type(header))
+            print(type(dataS))
+
             self.info[index] = header.decode('ascii').split(';')
             num = len(self.info[index])
             print(f'Number of elements in the header: {num}')
@@ -285,7 +289,9 @@ class Dso:
             dataS = self.read()
         
         dataInfoHeader = dataS[:2]
+        print(type(dataInfoHeader))
         dataInfo = int(dataInfoHeader[1])
+        print(type(dataInfo))
         self.points_num = int(dataS[2:2+dataInfo].decode('ascii'))/2
         dataS = dataS[2+dataInfo:-1]
         self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
