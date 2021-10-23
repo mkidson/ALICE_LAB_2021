@@ -178,7 +178,7 @@ class Dso:
         length = len(inBuffer)
         self.headerlen = 2 + int(inBuffer[1:2].decode())
         pkg_length = int(inBuffer[2:self.headerlen]) + self.headerlen + 1 #Block #48000[..8000bytes raw data...]<LF>
-        print ("Data transferring...  ")
+        print ('Data transferring...')
 
         pkg_length = pkg_length-length
         while True:
@@ -281,8 +281,11 @@ class Dso:
             sVunit = [s for s in self.info[index] if 'Vertical Units' in s]
             self.vunit.append(sVunit[0].split(',')[1])
         
+        else:
+            dataS = self.read()
+        
         dataInfoHeader = dataS[:2]
-        dataInfo = int(dataInfoHeader[1].decode('ascii'))
+        dataInfo = int(dataInfoHeader[1])
         self.points_num = int(dataS[2:2+dataInfo].decode('ascii'))/2
         dataS = dataS[2+dataInfo:-1]
         self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
