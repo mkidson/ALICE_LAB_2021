@@ -125,7 +125,7 @@ class Dso:
     def connect(self, dev):
         if (dev.count('.') == 3 and dev.count(':') == 1): # Checks if dev is an ip address or not
             try:
-                self.IO = com(dev)
+                self.IO = lan(dev)
             except:
                 print('Open LAN port failed!')
                 return
