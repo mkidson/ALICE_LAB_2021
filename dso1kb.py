@@ -117,9 +117,9 @@ class Dso:
         self.hpos = [[], [], [], []]
         self.ch_list = []
         self.info = [[], [], [], []]
-        self.write(':ACQ:RECO?\n')
-        recordLengthTemp = self.read().decode()[:-1]
-        self.recordLength = float(recordLengthTemp)
+        # self.write(':ACQ:RECO?\n')
+        # recordLengthTemp = self.read().decode()[:-1]
+        # self.recordLength = float(recordLengthTemp)
         genereate_lut()
     
     def connect(self, dev):
