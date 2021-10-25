@@ -299,10 +299,13 @@ class Dso:
         try:
             self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
         except:
+            """
+            This is an area that definitely can be improved. I ran into the issue of the scope occasionally outputting bad data that is split up by \n, so the read() function only gets part of it. I think there must be some way to get each section of the data and put it all together, but it wasn't working for me. It currently just gives zeros, so it can be easily ignored in analysis, but fixing this would be a great help.
+            """
             print('Buffer wrong size, setting all to zero')
             null = self.readlines()
             null = ''
-            time.sleep(5)
+            time.sleep(0.001)
             tempArr = bytearray(int(self.points_num*2))
             self.iWave[index] = unpack(f'>{self.points_num}h', tempArr)
 
