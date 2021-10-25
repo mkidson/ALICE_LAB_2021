@@ -62,6 +62,13 @@ class com:
             print ("read(), %s" % e)
             return ''
 
+    def readlines(self):
+        try:
+            return self.IO.readlines()
+        except serial.SerialException as e:
+            print ("readlines(), %s" % e)
+            return ''
+
     def readBytes(self, length):
         try:
             str=self.IO.read(length)

@@ -147,6 +147,7 @@ class Dso:
         self.read = self.IO.read
         self.readBytes = self.IO.readBytes
         self.closeIO = self.IO.closeIO
+        self.readlines = self.IO.readlines
         self.write('*IDN?\n')
         model_name = self.read().decode().split(',')[1]
         print(f'{model_name} connected to {dev} successfully!')
@@ -294,26 +295,17 @@ class Dso:
         print(self.points_num)
         dataS = dataS[2+dataInfo:-1] # Needs the -1 at the end to exclude the \n.
         print(len(dataS))
-        # if self.temp:
-            # print(dataS)
 
         try:
             self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
         except:
-            print('Buffer wrong size, reading again')
+            print('Buffer wrong size, setting all to zero')
+            null = self.readlines()
+            null = ''
             time.sleep(5)
-            while len(dataS) != 2*self.points_num:
-            # if this triggers, just read again
-            # print(dataS)
-                new = self.read()[:-1]
-                dataS += new
-                print(new)
-            # self.temp = True
-            # tempArr = bytearray(int(self.points_num*2))
-            # print(len(tempArr))
+            tempArr = bytearray(int(self.points_num*2))
             self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
 
-        
         return index
     
     def checkAcqState(self,  ch):
