@@ -306,7 +306,7 @@ class Dso:
             # if this triggers, just read again
             # print(dataS)
                 dataS += self.read()[:-1]
-                print(len(dataS))
+                print(dataS)
             # self.temp = True
             # tempArr = bytearray(int(self.points_num*2))
             # print(len(tempArr))
