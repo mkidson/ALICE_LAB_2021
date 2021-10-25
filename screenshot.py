@@ -7,7 +7,8 @@ from gw_lan import lan
 import dso1kb
 
 #Connecting to a DSO.
-dso=dso1kb.Dso('10.10.0.20:3001', True)
+# dso=dso1kb.Dso('10.10.0.20:3001')
+dso=dso1kb.Dso('/dev/ttyACM1')
 
 # for i in range(1,5):
 #     print(i, dso.isChannelOn(i))
