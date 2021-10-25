@@ -45,7 +45,7 @@ i = 0
 k = 0
 while i <= (int(args.n_events)):
     k += 1
-    trig_count.append(int(os.system('trdbox reg-read 0x102').read()[:2]))
+    trig_count.append(int(os.popen('trdbox reg-read 0x102').read().split('\n')[0]))
     if trig_count[k] != trig_count[k-1]:
         i += 1
         print(i)
