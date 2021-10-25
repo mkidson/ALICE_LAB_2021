@@ -304,7 +304,7 @@ class Dso:
             null = ''
             time.sleep(5)
             tempArr = bytearray(int(self.points_num*2))
-            self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
+            self.iWave[index] = unpack(f'>{self.points_num}h', tempArr)
 
         return index
     
