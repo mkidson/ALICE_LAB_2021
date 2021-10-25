@@ -47,14 +47,14 @@ for i in range(int(args.n_events)):
 
     dso.getRawData(True, 1)
     dso.getRawData(True, 2)
-    # dso.getRawData(True, 3)
+    dso.getRawData(True, 3)
 
     waveform = []
 
     # The convertWaveForm function takes the raw data from the dso object, formats it as a list of floats, and then returns that list
     waveform.append(dso.convertWaveform(1, 1))
     waveform.append(dso.convertWaveform(2, 1))
-    # waveform.append(dso.convertWaveform(3, 1))
+    waveform.append(dso.convertWaveform(3, 1))
     dso.resetChList()
 
     waveform = np.array(waveform)
