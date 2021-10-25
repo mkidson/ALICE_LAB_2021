@@ -67,8 +67,8 @@ class lan:
                 print ("read(), socket error: %s" % e)
                 return line_buf
             line_buf += a
-            if(a==b'\n'):
-                return line_buf
+            # if(a==b'\n'):
+        return line_buf
 
     def readBytes(self, length):
         str=''
