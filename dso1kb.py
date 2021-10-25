@@ -297,7 +297,7 @@ class Dso:
         except:
             print('Buffer wrong size, saving all zeros')
             time.sleep(5)
-            tempArr = bytearray(int(self.points_num/2))
+            tempArr = bytearray(int(self.points_num))
             print(len(tempArr))
             self.iWave[index] = unpack(f'>{self.points_num}h', tempArr)
         
