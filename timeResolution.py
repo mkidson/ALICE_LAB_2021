@@ -40,7 +40,7 @@ else:
     os.system(f'mkdir ~/prac2021/data/timeResolutionData/run_{args.run}')
 # similar thing for TRD data 
 
-trig_count = []
+trig_count = [int(os.popen('trdbox reg-read 0x102').read().split('\n')[0])]
 i = 0
 k = 0
 while i <= (int(args.n_events)):
