@@ -2,6 +2,8 @@
 """
 Program designed to be able to take a number of events from just the scintillators in order to make time resolution measurements.
 It takes both the run number of number of events as arguments when running the program, and should cancel the run if a run of that number already exists, just to avoid writing over data.
+
+NB: needs the scope to be triggering off one of the channels with scintillators (ch1 or ch2)
 """
 
 import dso1kb
@@ -38,7 +40,7 @@ else:
     os.system(f'mkdir ~/prac2021/data/timeResolutionData/run_{args.run}')
 # similar thing for TRD data 
 
-for i in range(args.n_events):
+for i in range(int(args.n_events)):
     now = datetime.datetime.now()
     nowString = now.strftime('%Y.%m.%d.%H.%M.%S')
 
