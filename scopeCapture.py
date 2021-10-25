@@ -52,5 +52,5 @@ waveform.append(dso.convertWaveform(2, 1))
 waveform.append(dso.convertWaveform(3, 1))
 
 waveform = np.array(waveform)
-
+# change the output to just be a number starting from 1
 np.savetxt(f'~/prac2021/data/oscilloscopeData/run_{args.run}/{nowString}.csv', waveform, header=nowString, delimiter=',')
