@@ -289,8 +289,8 @@ class Dso:
         dataInfo = int(dataInfoHeader.decode()[1])
         pointsByte = dataS[2:2+dataInfo]
         self.points_num = int(int(pointsByte.decode())/2)
-        dataS = dataS[2+dataInfo:]
-        print(dataS)
+        dataS = dataS[2+dataInfo:-1]
+        # print(dataS)
         try:
             self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
         except:
