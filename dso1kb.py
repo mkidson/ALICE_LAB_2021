@@ -256,13 +256,14 @@ class Dso:
 
             ## Here is where we deviated from the original method. It originally processed it all at once and then called getBlockData and did some things, but that just didn't seem to work for us. I suspect it's something to do with the change from python2 to 3. This should work, but there are still some parts that I don't understand. Best to not touch it :)
 
-            rDat = self.read()
-            bArr = bytearray(rDat)
-            bArrSplit = bArr.split(b'\n')
-            header = bArrSplit[0]
-            dataS = bArrSplit[1]
+            # rDat = self.read()
+            # bArr = bytearray(rDat)
+            # bArrSplit = bArr.split(b'\n')
+            # header = bArrSplit[0]
+            # dataS = bArrSplit[1]
 
-            self.info[index] = header.decode('ascii').split(';')
+            self.info[index] = self.read().decode('ascii').split(';')
+            dataS = self.read()
             num = len(self.info[index])
             # print(f'Number of elements in the header: {num}')
 
