@@ -30,7 +30,7 @@ if args.printargs:
     exit(0)
 
 # Connects to the oscilloscope over USB
-dso=dso1kb.Dso('/dev/ttyACM1')
+dso=dso1kb.Dso('/dev/ttyACM2')
 
 # Makes a new directory for the data. You will need to change the path to this for when you save data. This checks if the run exists and if it does, exits, else it creates a directory for the data and carries on
 if os.system(f'test -d ~/prac2021/data/timeResolutionData/run_{args.run}') == 0:
