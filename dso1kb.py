@@ -289,6 +289,7 @@ class Dso:
         dataInfo = int(dataInfoHeader.decode()[1])
         pointsByte = dataS[2:2+dataInfo]
         self.points_num = int(int(pointsByte.decode())/2)
+        print(self.points_num)
         dataS = dataS[2+dataInfo:-1] # Needs the -1 at the end to exclde the \n.
         print(len(dataS))
         try:
