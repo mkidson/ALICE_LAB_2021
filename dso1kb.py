@@ -248,7 +248,7 @@ class Dso:
         
         if (self.checkAcqState(ch)==-1):
             return
-        self.write(f':ACQ{ch}:MEM?\n') # Gets the raw data from the scope
+        self.write(f':ACQ{ch}:MEM?\n') # Requests the raw data from the scope
         index = len(self.ch_list)
         if (header_on == True):
             if (index == 0):
@@ -290,6 +290,7 @@ class Dso:
         pointsByte = dataS[2:2+dataInfo]
         self.points_num = int(int(pointsByte.decode())/2)
         dataS = dataS[2+dataInfo:]
+        print(len(dataS))
         try:
             self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
         except:
