@@ -300,12 +300,13 @@ class Dso:
         try:
             self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
         except:
-            # if this triggers, just read again
             print('Buffer wrong size, reading again')
             time.sleep(5)
+            while len(dataS) != 2*self.points_num:
+            # if this triggers, just read again
             # print(dataS)
-            dataS += self.read()[:-1]
-            print(len(dataS))
+                dataS += self.read()[:-1]
+                print(len(dataS))
             # self.temp = True
             # tempArr = bytearray(int(self.points_num*2))
             # print(len(tempArr))
