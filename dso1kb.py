@@ -305,8 +305,9 @@ class Dso:
             while len(dataS) != 2*self.points_num:
             # if this triggers, just read again
             # print(dataS)
-                dataS += self.read()[:-1]
-                print(dataS)
+                new = self.read()[:-1]
+                dataS += new
+                print(new)
             # self.temp = True
             # tempArr = bytearray(int(self.points_num*2))
             # print(len(tempArr))
