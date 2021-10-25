@@ -56,6 +56,7 @@ for i in range(int(args.n_events)):
     waveform.append(dso.convertWaveform(1, 1))
     waveform.append(dso.convertWaveform(2, 1))
     waveform.append(dso.convertWaveform(3, 1))
+    dso.resetChList()
 
     waveform = np.array(waveform)
     np.savetxt(f'/home/trd/prac2021/data/oscilloscopeData/run_{args.run}/{i}.csv', waveform, header=nowString, delimiter=',')

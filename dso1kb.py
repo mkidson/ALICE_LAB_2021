@@ -467,3 +467,6 @@ class Dso:
             return True
         else:
             return False
+
+    def resetChList(self):
+        self.ch_list = []

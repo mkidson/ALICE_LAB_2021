@@ -51,6 +51,7 @@ waveform = []
 waveform.append(dso.convertWaveform(1, 1))
 waveform.append(dso.convertWaveform(2, 1))
 waveform.append(dso.convertWaveform(3, 1))
+dso.resetChList()
 
 waveform = np.array(waveform)
 # change the output to just be a number starting from 1
