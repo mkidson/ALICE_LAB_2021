@@ -61,8 +61,8 @@ class lan:
         line_buf=b''
         while True:
             try:
-                a=self.IO.recv(1)
-                # a=self.IO.recv(2048)
+                # a=self.IO.recv(1)
+                a=self.IO.recv(2048)
             except socket.error as e:
                 print ("read(), socket error: %s" % e)
                 return line_buf
