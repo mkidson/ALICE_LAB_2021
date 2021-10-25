@@ -148,6 +148,7 @@ class Dso:
         self.readBytes = self.IO.readBytes
         self.closeIO = self.IO.closeIO
         self.readlines = self.IO.readlines
+        null = self.readlines()
         self.write('*IDN?\n')
         model_name = self.read().decode().split(',')[1]
         print(f'{model_name} connected to {dev} successfully!')
