@@ -300,14 +300,15 @@ class Dso:
         try:
             self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
         except:
-            print('Buffer wrong size, saving all zeros')
-            self.temp = True
+            # if this triggers, just read again
+            print('Buffer wrong size, reading again')
             time.sleep(5)
-            tempArr = bytearray(int(self.points_num*2))
-            print(len(tempArr))
-            self.iWave[index] = unpack(f'>{self.points_num}h', tempArr)
-            self.write(':ACQ2:STAT?\n')
-            print(self.read())
+            dataS += self.read()[:-1]
+            # self.temp = True
+            # tempArr = bytearray(int(self.points_num*2))
+            # print(len(tempArr))
+            self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
+
         
         return index
     
