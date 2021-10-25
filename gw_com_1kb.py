@@ -57,7 +57,7 @@ class com:
 
     def read(self):
         try:
-            return self.IO.readlines()
+            return self.IO.readline()
         except serial.SerialException as e:
             print ("read(), %s" % e)
             return ''
