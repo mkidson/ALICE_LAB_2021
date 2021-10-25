@@ -120,6 +120,7 @@ class Dso:
         # self.write(':ACQ:RECO?\n')
         # recordLengthTemp = self.read().decode()[:-1]
         # self.recordLength = float(recordLengthTemp)
+        self.temp = False
         genereate_lut()
     
     def connect(self, dev):
@@ -285,17 +286,21 @@ class Dso:
         else:
             dataS = self.read()
         
+        # Note the various uses of a *2 or a /2 here, it really is weird when dealing with byte arrays filled with hex values. the lengths of arrays are really weird but I think this works
         dataInfoHeader = dataS[:2]
         dataInfo = int(dataInfoHeader.decode()[1])
         pointsByte = dataS[2:2+dataInfo]
         self.points_num = int(int(pointsByte.decode())/2)
         print(self.points_num)
-        dataS = dataS[2+dataInfo:-1] # Needs the -1 at the end to exclde the \n.
+        dataS = dataS[2+dataInfo:-1] # Needs the -1 at the end to exclude the \n.
         print(len(dataS))
+        if self.temp:
+            print(dataS)
         try:
             self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
         except:
             print('Buffer wrong size, saving all zeros')
+            self.temp = True
             time.sleep(5)
             tempArr = bytearray(int(self.points_num*2))
             print(len(tempArr))
