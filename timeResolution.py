@@ -40,13 +40,14 @@ else:
     os.system(f'mkdir ~/prac2021/data/timeResolutionData/run_{args.run}')
 # similar thing for TRD data 
 
-trig_count = [int(os.popen('trdbox reg-read 0x102').read().split('\n')[0])]
+trig_count_1 = int(os.popen('trdbox reg-read 0x102').read().split('\n')[0])
+trig_count_2 = 0
 i = 0
 k = 0
 while i <= (int(args.n_events)):
     k += 1
-    trig_count.append(int(os.popen('trdbox reg-read 0x102').read().split('\n')[0]))
-    if trig_count[k] != trig_count[k-1]:
+    trig_count2 = int(os.popen('trdbox reg-read 0x102').read().split('\n')[0])
+    if trig_count_2 != trig_count_1:
         i += 1
         print(i)
         now = datetime.datetime.now()
@@ -68,3 +69,4 @@ while i <= (int(args.n_events)):
         np.savetxt(f'/home/trd/prac2021/data/timeResolutionData/run_{args.run}/{i}.csv', waveform, header=nowString, delimiter=',')
     else:
         pass
+    trig_count_1 = trig_count_2
