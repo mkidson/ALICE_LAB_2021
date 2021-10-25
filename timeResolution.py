@@ -41,6 +41,7 @@ else:
 # similar thing for TRD data 
 
 for i in range(int(args.n_events)):
+    print(i)
     now = datetime.datetime.now()
     nowString = now.strftime('%Y.%m.%d.%H.%M.%S')
 

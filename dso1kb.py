@@ -290,7 +290,7 @@ class Dso:
         pointsByte = dataS[2:2+dataInfo]
         self.points_num = int(int(pointsByte.decode())/2)
         dataS = dataS[2+dataInfo:-1] # Needs the -1 at the end to exclde the \n.
-        # print(dataS)
+        print(len(dataS))
         try:
             self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
         except:
