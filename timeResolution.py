@@ -65,6 +65,6 @@ while i <= (int(args.n_events)):
         dso.resetChList()
 
         waveform = np.array(waveform)
-        np.savetxt(f'/home/trd/prac2021/data/timeResolutionData/run_{args.run}/{}.csv', waveform, header=nowString, delimiter=',')
+        np.savetxt(f'/home/trd/prac2021/data/timeResolutionData/run_{args.run}/{i}.csv', waveform, header=nowString, delimiter=',')
     else:
         pass
