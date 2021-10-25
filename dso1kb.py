@@ -303,6 +303,7 @@ class Dso:
             # if this triggers, just read again
             print('Buffer wrong size, reading again')
             time.sleep(5)
+            print(dataS)
             dataS += self.read()[:-1]
             # self.temp = True
             # tempArr = bytearray(int(self.points_num*2))
