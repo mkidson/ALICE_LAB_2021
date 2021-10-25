@@ -294,8 +294,9 @@ class Dso:
         print(self.points_num)
         dataS = dataS[2+dataInfo:-1] # Needs the -1 at the end to exclude the \n.
         print(len(dataS))
-        if self.temp:
-            print(dataS)
+        # if self.temp:
+            # print(dataS)
+
         try:
             self.iWave[index] = unpack(f'>{self.points_num}h', dataS)
         except:
@@ -305,6 +306,8 @@ class Dso:
             tempArr = bytearray(int(self.points_num*2))
             print(len(tempArr))
             self.iWave[index] = unpack(f'>{self.points_num}h', tempArr)
+            self.write(':ACQ2:STAT?\n')
+            print(self.read())
         
         return index
     
