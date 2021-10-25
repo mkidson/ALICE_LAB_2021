@@ -3,7 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 
-dso=dso1kb.Dso('10.10.0.20:3001', True)
+# dso=dso1kb.Dso('10.10.0.20:3001', True)
+dso=dso1kb.Dso('/dev/ttyACM1', True)
 t1 = time.time()
 dso.getRawData(True, 1)
 dso.getRawData(True, 2)
