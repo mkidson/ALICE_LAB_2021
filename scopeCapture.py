@@ -32,7 +32,7 @@ if args.printargs:
     exit(0)
 
 # Connects to the oscilloscope over LAN (this IP and port might change) and then gets the time of the event
-dso = dso1kb.Dso('10.10.0.20:3001', True)
+dso = dso1kb.Dso('10.10.0.20:3001')
 now = datetime.datetime.now()
 nowString = now.strftime('%Y.%m.%d.%H.%M.%S')
 
