@@ -81,7 +81,7 @@ class reader:
         plt.imshow(self.dso.im)
         saveName = str(input('Enter the name the screenshot will be saved under: '))
         # requires a screenshots folder in the outer directory
-        plt.savefig(f'oscilloscope/screenshots/{saveName}.png')
+        plt.savefig(f'oscilloscopeRead/screenshots/{saveName}.png')
 
 # if __name__ == "__main__":
 #     devstr = str(input('Enter the device name: '))
