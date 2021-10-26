@@ -11,7 +11,7 @@ import oscilloscopeRead.dso1kb
 import numpy as np
 import matplotlib.pyplot as plt
 
-class reader:
+class Reader:
     """
     Opens the connection to the oscilloscope. This can take a few seconds as it needs to clear all the scope output.
 
