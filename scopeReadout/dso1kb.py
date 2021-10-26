@@ -62,7 +62,6 @@ from struct import unpack
 import struct
 import numpy as np
 import io, os, sys, time, platform
-import hexdump
 
 __version__ = "1.01" #dso1kb module's version.
 
@@ -117,10 +116,6 @@ class Dso:
         self.hpos = [[], [], [], []]
         self.ch_list = []
         self.info = [[], [], [], []]
-        # self.write(':ACQ:RECO?\n')
-        # recordLengthTemp = self.read().decode()[:-1]
-        # self.recordLength = float(recordLengthTemp)
-        self.temp = False
         genereate_lut()
     
     def connect(self, dev):
@@ -148,7 +143,7 @@ class Dso:
         self.readBytes = self.IO.readBytes
         self.closeIO = self.IO.closeIO
         self.readlines = self.IO.readlines
-        null = self.readlines()
+        null = self.readlines()   # Reads all the data currently in the scope buffer, to avoid complications
         self.write('*IDN?\n')
         model_name = self.read().decode().split(',')[1]
         print(f'{model_name} connected to {dev} successfully!')
@@ -288,7 +283,7 @@ class Dso:
         else:
             dataS = self.read()
         
-        # Note the various uses of a *2 or a /2 here, it really is weird when dealing with byte arrays filled with hex values. the lengths of arrays are really weird but I think this works
+        ## Note the various uses of a *2 or a /2 here, it really is weird when dealing with byte arrays filled with hex values. the lengths of arrays are really weird but I think this works
         dataInfoHeader = dataS[:2]
         dataInfo = int(dataInfoHeader.decode()[1])
         pointsByte = dataS[2:2+dataInfo]
@@ -304,7 +299,6 @@ class Dso:
             print('Buffer wrong size, setting all to zero')
             null = self.readlines()
             null = ''
-            time.sleep(0.001)
             tempArr = bytearray(int(self.points_num*2))
             self.iWave[index] = unpack(f'>{self.points_num}h', tempArr)
 
@@ -481,3 +475,6 @@ class Dso:
 
     def resetChList(self):
         self.ch_list = []
+    
+    def readlines(self):
+        null = self.readlines()

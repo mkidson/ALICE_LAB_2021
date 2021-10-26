@@ -2,7 +2,7 @@
 """
 A mockup of the program I think should be run when we want to take a run of data. It should run through the number of events we want to take, saving the relevant data at each step before moving to the next event. 
 """
-import dso1kb
+import ALICE_LAB_2021.dso1kb
 import datetime
 import os
 import argparse
