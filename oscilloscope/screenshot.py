@@ -4,10 +4,10 @@ Takes a screeshot of the current oscilloscope screen and saves it to the folder 
 """
 import matplotlib.pyplot as plt
 
-import oscilloscope.dso1kb
+import dso1kb
 import os
 
-dso=oscilloscope.dso1kb.Dso('/dev/ttyACM2')
+dso=dso1kb.Dso('/dev/ttyACM2')
 
 dso.write(':DISP:OUTP?\n')
 dso.getBlockData()
