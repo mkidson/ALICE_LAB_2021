@@ -78,7 +78,7 @@ class reader:
         self.dso.getBlockData()
         self.dso.ImageDecode(1)
 
-        plt.imshow(dso.im)
+        plt.imshow(self.dso.im)
         saveName = str(input('Enter the name the screenshot will be saved under: '))
         # requires a screenshots folder in the outer directory
         plt.savefig(f'screenshots/{saveName}.png')
