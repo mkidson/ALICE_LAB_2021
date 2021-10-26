@@ -7,7 +7,7 @@ Our set-up had the two scintillators feeding to channel 1 and 2 of the scope, an
 The details of what these commands do can be found in the Programming Manual in the downloads section of https://www.gwinstek.com/en-global/products/detail/GDS-1000B.
 """
 
-import dso1kb
+from oscilloscope import dso1kb
 import numpy as np
 
 class reader:
