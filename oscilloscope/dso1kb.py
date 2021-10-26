@@ -55,8 +55,8 @@ These commands can be found at https://www.gwinstek.com/en-global/products/downl
 
 P.S. any comments with a double # are from me trying to explain things
 """
-gw_com_1kb import com
-gw_lan import lan
+from gw_com_1kb import com
+from gw_lan import lan
 from PIL import Image
 from struct import unpack
 import struct
