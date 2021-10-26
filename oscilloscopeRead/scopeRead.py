@@ -7,7 +7,7 @@ Our set-up had the two scintillators feeding to channel 1 and 2 of the scope, an
 The details of what these commands do can be found in the Programming Manual in the downloads section of https://www.gwinstek.com/en-global/products/detail/GDS-1000B.
 """
 
-import oscilloscope.dso1kb
+import oscilloscopeRead.dso1kb
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -25,7 +25,7 @@ class reader:
 
     """
     def __init__(self, interface):
-        self.dso = oscilloscope.dso1kb.Dso(f'/dev/{interface}')
+        self.dso = oscilloscopeRead.dso1kb.Dso(f'/dev/{interface}')
         # Sets the scope to the right settings 
         self.dso.write(':CHAN1:DISP ON\n')
         self.dso.write(':CHAN2:DISP ON\n')

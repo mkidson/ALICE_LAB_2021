@@ -55,8 +55,8 @@ These commands can be found at https://www.gwinstek.com/en-global/products/downl
 
 P.S. any comments with a double # are from me trying to explain things
 """
-from oscilloscope.gw_com_1kb import com
-from oscilloscope.gw_lan import lan
+from oscilloscopeRead.gw_com_1kb import com
+from oscilloscopeRead.gw_lan import lan
 from PIL import Image
 from struct import unpack
 import struct
