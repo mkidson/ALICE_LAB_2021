@@ -33,7 +33,7 @@ class reader:
         self.dso.write(':CHAN1:SCAL 1E0\n')
         self.dso.write(':CHAN2:SCAL 1E0\n')
         self.dso.write(':CHAN3:SCAL 5E0\n')
-        self.dso.write(':CHAN3:SCAL 1E0\n')
+        self.dso.write(':CHAN4:SCAL 1E0\n')
         self.dso.write(':TRIG:SOUR CH3\n')
         self.dso.write(':TRIG:LEV 3E\n')
         self.dso.write(':TRIG:EDG:SLOP RIS\n')
