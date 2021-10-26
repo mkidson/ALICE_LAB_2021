@@ -9,6 +9,7 @@ The details of what these commands do can be found in the Programming Manual in 
 
 import oscilloscope.dso1kb
 import numpy as np
+import matplotlib.pyplot as plt
 
 class reader:
     """
@@ -71,3 +72,18 @@ class reader:
         self.dso.resetChList()
 
         return np.array(waveforms)
+
+    def takeScreenshot(self):
+        self.dso.write(':DISP:OUTP?\n')
+        self.dso.getBlockData()
+        self.dso.ImageDecode(1)
+
+        plt.imshow(dso.im)
+        saveName = str(input('Enter the name the screenshot will be saved under: '))
+        # requires a screenshots folder in the outer directory
+        plt.savefig(f'screenshots/{saveName}.png')
+
+if __name__ == "__main__":
+    devstr = str(input('Enter the device name: '))
+    scope = reader(devstr)
+    scope.takeScreenshot()
