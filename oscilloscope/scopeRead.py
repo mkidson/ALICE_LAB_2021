@@ -2,12 +2,15 @@
 """
 Program written to create an object in the minidaq file such that data can easily be taken from the oscilloscope by simply calling a method on that object.
 Note that it is designed to be initialised outside a loop, which connects it to the scope, and then on each iteration, when data is taken, getData() is called, returning the waveforms. 
+The settings initially set in the __init__ method are specific to our current set-up and will need to be modified if you're doing things differently.
+Our set-up had the two scintillators feeding to channel 1 and 2 of the scope, and then going to the TRD box discriminators. The pre-trigger from the TRD box then came back to channel 3 of the scope. Channel 4 was not used but is set to display anyway for generality.
+The details of what these commands do can be found in the Programming Manual in the downloads section of https://www.gwinstek.com/en-global/products/detail/GDS-1000B.
 """
 
 import dso1kb
 import numpy as np
 
-class scope:
+class reader:
     """
     Opens the connection to the oscilloscope. This can take a few seconds as it needs to clear all the scope output.
 
@@ -26,9 +29,11 @@ class scope:
         self.dso.write(':CHAN1:DISP ON\n')
         self.dso.write(':CHAN2:DISP ON\n')
         self.dso.write(':CHAN3:DISP ON\n')
+        self.dso.write(':CHAN4:DISP ON\n')
         self.dso.write(':CHAN1:SCAL 1E0\n')
         self.dso.write(':CHAN2:SCAL 1E0\n')
         self.dso.write(':CHAN3:SCAL 5E0\n')
+        self.dso.write(':CHAN3:SCAL 1E0\n')
         self.dso.write(':TRIG:SOUR CH3\n')
         self.dso.write(':TRIG:LEV 3E\n')
         self.dso.write(':TRIG:EDG:SLOP RIS\n')
