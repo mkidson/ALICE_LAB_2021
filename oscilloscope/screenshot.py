@@ -4,7 +4,7 @@ Takes a screeshot of the current oscilloscope screen and saves it to the folder 
 """
 import matplotlib.pyplot as plt
 
-import dso1kb
+from oscilloscope import dso1kb
 import os
 
 dso=dso1kb.Dso('/dev/ttyACM2')
