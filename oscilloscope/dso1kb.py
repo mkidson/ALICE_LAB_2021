@@ -144,7 +144,7 @@ class Dso:
         self.closeIO = self.IO.closeIO
         self.readlines = self.IO.readlines
         self.clearBuf = self.IO.clearBuf
-        null = self.readlines()   # Reads all the data currently in the scope buffer, to avoid complications
+        self.clearBuf()    # Clears the buffer to avoid spillage from earlier sessions
         self.write('*IDN?\n')
         model_name = self.read().decode().split(',')[1]
         print(f'{model_name} connected to {dev} successfully!')
@@ -297,9 +297,8 @@ class Dso:
             """
             This is an area that definitely can be improved. I ran into the issue of the scope occasionally outputting bad data that is split up by \n, so the read() function only gets part of it. I think there must be some way to get each section of the data and put it all together, but it wasn't working for me. It currently just gives zeros, so it can be easily ignored in analysis, but fixing this would be a great help.
             """
-            print('Buffer wrong size, setting all to zero')
-            null = self.readlines()
-            null = ''
+            # print('Buffer wrong size, setting all to zero')
+            self.clearBuf()
             tempArr = bytearray(int(self.points_num*2))
             self.iWave[index] = unpack(f'>{self.points_num}h', tempArr)
 
