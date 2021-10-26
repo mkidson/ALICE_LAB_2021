@@ -143,6 +143,7 @@ class Dso:
         self.readBytes = self.IO.readBytes
         self.closeIO = self.IO.closeIO
         self.readlines = self.IO.readlines
+        self.clearBuf = self.IO.clearBuf
         null = self.readlines()   # Reads all the data currently in the scope buffer, to avoid complications
         self.write('*IDN?\n')
         model_name = self.read().decode().split(',')[1]
