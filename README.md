@@ -31,3 +31,4 @@ There are some strange quirks when it comes to interfacing with the oscilloscope
 
 ## Final housekeeping
 The programs in the `not vital` folder are the programs I created while trying to understanding what was needed in this process. Some might be useful, such as `timeResolution.py`, but I am fairly sure most of them will not need to be used again. The sub-folder `old` has programs from previous years that were used for debugging and inspiration, but are all pretty much useless now.
+The `screenshot.py` program is being kept here simply to show you how to take a screenshot. If you really want to use this, you could write something that just calls the appropriate function in `scopeRead.py`. 
