@@ -83,7 +83,7 @@ class reader:
         # requires a screenshots folder in the outer directory
         plt.savefig(f'screenshots/{saveName}.png')
 
-if __name__ == "__main__":
-    devstr = str(input('Enter the device name: '))
-    scope = reader(devstr)
-    scope.takeScreenshot()
+# if __name__ == "__main__":
+#     devstr = str(input('Enter the device name: '))
+#     scope = reader(devstr)
+#     scope.takeScreenshot()
