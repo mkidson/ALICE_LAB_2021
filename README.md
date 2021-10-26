@@ -18,11 +18,11 @@ There are some strange quirks when it comes to interfacing with the oscilloscope
 - The USB device name, which needs to be fed to either `scopeRead.reader()`, can be found by running `dmesg` in the linux commandline after plugging the oscilloscope in and looking for something that looks like `ttyACM1` in the line `cdc_acm 3-8:2.0: {name}: USB ACM device`.
 - The commands for the oscilloscope and what they do can be found in the Programming Manual in the Downloads section of [https://www.gwinstek.com/en-global/products/detail/GDS-1000B].
 - I found it easiest to pass commands to the oscilloscope by running a python environment in the package directory, then doing 
-        ```python
-        import dso1kb
-        dso = dso1kb.Dso('/dev/{device name}')
-        dso.write('{command}\n')
-        ```
+    ```python
+    import dso1kb
+    dso = dso1kb.Dso('/dev/{device name}')
+    dso.write('{command}\n')
+    ```
     and if running a command that has an output, which should end with a "?", just run `dso.read()`. 
 - When running in USB interface mode, `dso.read()` will read up until the next newline character ("\\n"). To get the next section, just run the command again. I have also created the `dso.readlines()` command, which will just read everything in the buffer, effectively clearing it. This does take a few seconds so don't use it in time sensitive situations.
 - Very importantly, notice the "\\n" at the end of the command above. I found that when I didn't include the newline at the end of the command, things started to break when it came to the order of executed commands. I think it has something to do with how the oscilloscope actually executed the commands given to it, but nevertheless **ALWAYS INCLUDE A NEWLINE CHARACTER**.
