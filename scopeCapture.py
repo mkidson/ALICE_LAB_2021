@@ -33,7 +33,7 @@ if args.printargs:
 
 # Connects to the oscilloscope over USB and then gets the time of the event
 # dso = dso1kb.Dso('10.10.0.20:3001')
-dso=dso1kb.Dso('/dev/ttyACM1')
+dso=dso1kb.Dso('/dev/ttyACM2')
 now = datetime.datetime.now()
 nowString = now.strftime('%Y.%m.%d.%H.%M.%S')
 

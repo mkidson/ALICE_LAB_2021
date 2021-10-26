@@ -22,7 +22,7 @@ if args.printargs:
     exit(0)
 
 # Connects to the oscilloscope over USB
-dso=dso1kb.Dso('/dev/ttyACM1')
+dso=dso1kb.Dso('/dev/ttyACM2')
 
 if args.mode == 'timeResolution':
     dso.write(':CHAN3:DISP OFF\n')
