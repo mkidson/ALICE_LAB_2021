@@ -9,8 +9,7 @@ The package `oscilloscopeRead` is where the magic happens. Make sure to run `pip
 python3 -m venv {venv name}
 . {venv name}/bin/activate
 pip install --upgrade pip
-pip install -r requirements.txt
-pip install -e .
+pip install -e oscilloscopeRead
 ```
 The environment can then be accessed by running `. {venv name}/bin/activate` in the directory the previous commands were run in.
 
@@ -21,8 +20,8 @@ There are some strange quirks when it comes to interfacing with the oscilloscope
 - The commands for the oscilloscope and what they do can be found in the Programming Manual in the Downloads section of [https://www.gwinstek.com/en-global/products/detail/GDS-1000B].
 - I found it easiest to pass commands to the oscilloscope by running a python environment in the package directory, then doing 
     ```python
-    import dso1kb
-    dso = dso1kb.Dso('/dev/{device name}')
+    import oscilloscopeRead.dso1kb
+    dso = oscilloscopeRead.dso1kb.Dso('/dev/{device name}')
     dso.write('{command}\n')
     ```
     and if running a command that has an output, which should end with a "?", just run `dso.read()`. 
@@ -32,8 +31,8 @@ There are some strange quirks when it comes to interfacing with the oscilloscope
 - As mentioned before, I ran into an issue where the oscilloscope would, seemingly randomly, output data that was not in the form required; it had line breaks in the middle of it, which would mess with the `dso.read()` method. To get around this, when it happens I just set all the data to 0 and run `dso.clearBuf()`. I'm certain this can be improved, maybe by looking at how to reconstruct the data from the separate pieces, but I ran out of time to do that.
 - I spent a while trying to work out what the time is between data points in the waveforms output by the oscilloscope and I'm fairly sure the number can be found in the header of the data output. Currently that number isn't being captured but in order to see it try running these commands in a python environment in the directory containing the `oscilloscopeRead` directory:
     ```python
-    import oscilloscope.dso1kb
-    dso = oscilloscope.dso1kb.Dso('/dev/{device name}')
+    import oscilloscopeRead.dso1kb
+    dso = oscilloscopeRead.dso1kb.Dso('/dev/{device name}')
     dso.write(':ACQ1:MEM?\n')
     dso.read()
     ```
