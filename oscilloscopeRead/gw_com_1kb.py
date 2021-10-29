@@ -78,7 +78,7 @@ class com:
             return ''
 
     def clearBuf(self):
-        time.sleep(0.5)
+        # time.sleep(0.5)
         while(True):
             num=self.IO.inWaiting()
             if(num==0):
@@ -86,7 +86,7 @@ class com:
             else:
                 print ('-')
             self.IO.flushInput()    #Clear input buffer.
-            time.sleep(0.1)
+            # time.sleep(0.1)
 
     def closeIO(self):
         self.IO.close()
