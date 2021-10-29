@@ -50,6 +50,8 @@ i = 0
 k = 0
 while i <= (int(args.n_events)):
     k += 1
+    print(trig_count_1)
+    print(trig_count_2)
     trig_count2 = int(os.popen('trdbox reg-read 0x102').read().split('\n')[0])
     if trig_count_2 != trig_count_1:
         i += 1
