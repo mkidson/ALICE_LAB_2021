@@ -35,6 +35,7 @@ class Reader:
         self.dso.write(':CHAN2:SCAL 1E0\n')
         self.dso.write(':CHAN3:SCAL 2E0\n')
         self.dso.write(':CHAN4:SCAL 1E0\n')
+        self.dso.write(':CHAN4:POS 6E0\n')
         self.dso.write(':TRIG:SOUR CH3\n')
         self.dso.write(':TRIG:LEV 1.2E\n')
         self.dso.write(':TRIG:EDG:SLOP RIS\n')
