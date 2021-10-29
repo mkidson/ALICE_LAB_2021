@@ -6,7 +6,7 @@ It takes both the run number of number of events as arguments when running the p
 NB: needs the scope to be triggering off one of the channels with scintillators (ch1 or ch2)
 """
 
-import dso1kb
+from oscilloscopeRead import scopeRead
 import datetime
 import os
 import argparse
@@ -29,15 +29,19 @@ if args.printargs:
     print(args)
     exit(0)
 
+scope = scopeRead.Reader('ttyACM2')
+
 # Connects to the oscilloscope over USB
-dso=dso1kb.Dso('/dev/ttyACM2')
+# dso=dso1kb.Dso('/dev/ttyACM2')
 
 # Makes a new directory for the data. You will need to change the path to this for when you save data. This checks if the run exists and if it does, exits, else it creates a directory for the data and carries on
-if os.system(f'test -d ~/prac2021/data/timeResolutionData/run_{args.run}') == 0:
+
+if os.isdir(f'~/prac2021/data/timeResolutionData/run_{args.run}'):
     print('That run already exists, change run number to avoid writing over data')
     exit(0)
-else:
-    os.system(f'mkdir ~/prac2021/data/timeResolutionData/run_{args.run}')
+else: 
+    os.mkdir(f'~/prac2021/data/timeResolutionData/run_{args.run}')
+
 # similar thing for TRD data 
 
 trig_count_1 = int(os.popen('trdbox reg-read 0x102').read().split('\n')[0])
@@ -53,19 +57,21 @@ while i <= (int(args.n_events)):
         now = datetime.datetime.now()
         nowString = now.strftime('%Y.%m.%d.%H.%M.%S')
 
-        dso.getRawData(True, 1)
-        dso.getRawData(True, 2)
-        dso.getRawData(True, 3)
+        waveform = scope.getData([1,2,3])
 
-        waveform = []
+        # dso.getRawData(True, 1)
+        # dso.getRawData(True, 2)
+        # dso.getRawData(True, 3)
 
-        # The convertWaveForm function takes the raw data from the dso object, formats it as a list of floats, and then returns that list
-        waveform.append(dso.convertWaveform(1, 1))
-        waveform.append(dso.convertWaveform(2, 1))
-        waveform.append(dso.convertWaveform(3, 1))
-        dso.resetChList()
+        # waveform = []
 
-        waveform = np.array(waveform)
+        # # The convertWaveForm function takes the raw data from the dso object, formats it as a list of floats, and then returns that list
+        # waveform.append(dso.convertWaveform(1, 1))
+        # waveform.append(dso.convertWaveform(2, 1))
+        # waveform.append(dso.convertWaveform(3, 1))
+        # dso.resetChList()
+
+        # waveform = np.array(waveform)
         np.savetxt(f'/home/trd/prac2021/data/timeResolutionData/run_{args.run}/{i}.csv', waveform, header=nowString, delimiter=',')
     else:
         pass
