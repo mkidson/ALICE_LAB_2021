@@ -74,4 +74,4 @@ while i <= (int(args.n_events)):
 
 t2 = time.time()
 print('Time taken:', t2-t1)
-np.savetxt(f'/home/trd/prac2021/data/timeResolutionData/run_{args.run}/timeTaken.txt', t2-t1)
+# np.savetxt(f'/home/trd/prac2021/data/timeResolutionData/run_{args.run}/timeTaken.txt', t2-t1)
