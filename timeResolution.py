@@ -8,6 +8,7 @@ NB: needs the scope to be triggering off one of the channels with scintillators 
 
 from oscilloscopeRead import scopeRead
 import datetime
+import time
 import os
 import argparse
 import numpy as np
@@ -50,6 +51,7 @@ os.system('trdbox unblock')
 trig_count_2 = 0
 i = 0
 k = 0
+t1 = time.time()
 while i <= (int(args.n_events)):
     # k += 1
     # print(trig_count_1)
@@ -69,3 +71,7 @@ while i <= (int(args.n_events)):
         os.system('trdbox unblock')
     else:
         pass
+
+t2 = time.time()
+print('Time taken:', t2-t1)
+np.savetxt(f'/home/trd/prac2021/data/timeResolutionData/run_{args.run}/timeTaken.txt', t2-t1)
