@@ -45,7 +45,7 @@ else:
 # similar thing for TRD data 
 
 trig_count_1 = int(os.popen('trdbox reg-read 0x102').read().split('\n')[0])
-trig_count_2 = 0
+trig_count_2 = int(os.popen('trdbox reg-read 0x102').read().split('\n')[0])
 i = 0
 k = 0
 while i <= (int(args.n_events)):
