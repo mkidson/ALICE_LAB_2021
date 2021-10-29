@@ -36,11 +36,11 @@ scope = scopeRead.Reader('ttyACM2')
 
 # Makes a new directory for the data. You will need to change the path to this for when you save data. This checks if the run exists and if it does, exits, else it creates a directory for the data and carries on
 
-if os.path.isdir(f'~/prac2021/data/timeResolutionData/run_{args.run}'):
+if os.path.isdir(f'/home/trd/prac2021/data/timeResolutionData/run_{args.run}'):
     print('That run already exists, change run number to avoid writing over data')
     exit(0)
 else: 
-    os.mkdir(f'~/prac2021/data/timeResolutionData/run_{args.run}')
+    os.mkdir(f'/home/trd/prac2021/data/timeResolutionData/run_{args.run}')
 
 # similar thing for TRD data 
 
