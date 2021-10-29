@@ -76,5 +76,6 @@ while i <= (int(args.n_events)):
         # waveform = np.array(waveform)
         np.savetxt(f'/home/trd/prac2021/data/timeResolutionData/run_{args.run}/{i}.csv', waveform, header=nowString, delimiter=',')
         trig_count_1 = trig_count_2
+        # 1
     else:
         pass
