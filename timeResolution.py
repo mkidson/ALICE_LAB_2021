@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
-Program designed to be able to take a number of events from just the scintillators in order to make time resolution measurements.
-It takes both the run number of number of events as arguments when running the program, and should cancel the run if a run of that number already exists, just to avoid writing over data.
+Program designed to be able to take a number of events from just the scintillators in order to make measurements for both time resolution and angular resolution.
+It takes both the run name and number of events as arguments when running the program, and should cancel the run if a run with that name already exists, just to avoid writing over data.
 
-NB: needs the scope to be triggering off one of the channels with scintillators (ch1 or ch2)
+NB: needs the scope to be triggering off the trigger from the TRDbox
+
+Author: Miles Kidson
 """
 
 from oscilloscopeRead import scopeRead
@@ -30,10 +32,8 @@ if args.printargs:
     print(args)
     exit(0)
 
+# Creates a Reader object. 
 scope = scopeRead.Reader('ttyACM2')
-
-# Connects to the oscilloscope over USB
-# dso=dso1kb.Dso('/dev/ttyACM2')
 
 # Makes a new directory for the data. You will need to change the path to this for when you save data. This checks if the run exists and if it does, exits, else it creates a directory for the data and carries on
 
@@ -43,16 +43,13 @@ if os.path.isdir(f'/home/trd/prac2021/data/timeResolutionData/run_{args.run}'):
 else: 
     os.mkdir(f'/home/trd/prac2021/data/timeResolutionData/run_{args.run}')
 
-# similar thing for TRD data 
-
-
+# This loop continuously checks if the TRDbox has sent a trigger by checking if the registry corresponding to number of triggers has changed. It will
 trig_count_1 = int(os.popen('trdbox reg-read 0x102').read().split('\n')[0])
 os.system('trdbox unblock')
 trig_count_2 = 0
 i = 0
-k = 0
 t1 = time.time()
-while i <= (int(args.n_events)):
+while i < (int(args.n_events)):
     # k += 1
     # print(trig_count_1)
     trig_count_2 = int(os.popen('trdbox reg-read 0x102').read().split('\n')[0])
