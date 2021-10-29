@@ -61,21 +61,9 @@ while i <= (int(args.n_events)):
 
         waveform = scope.getData([1,2,3])
 
-        # dso.getRawData(True, 1)
-        # dso.getRawData(True, 2)
-        # dso.getRawData(True, 3)
-
-        # waveform = []
-
-        # # The convertWaveForm function takes the raw data from the dso object, formats it as a list of floats, and then returns that list
-        # waveform.append(dso.convertWaveform(1, 1))
-        # waveform.append(dso.convertWaveform(2, 1))
-        # waveform.append(dso.convertWaveform(3, 1))
-        # dso.resetChList()
-
-        # waveform = np.array(waveform)
         np.savetxt(f'/home/trd/prac2021/data/timeResolutionData/run_{args.run}/{i}.csv', waveform, header=nowString, delimiter=',')
         trig_count_1 = trig_count_2
-        # 1
+
+        os.system('trdbox unblock')
     else:
         pass
