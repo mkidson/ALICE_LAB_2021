@@ -73,3 +73,4 @@ print('Time taken:', t2-t1)
 
 f = open(f'/home/trd/prac2021/data/angularResolutionData/run_{args.run}/timeTaken.txt', 'w')
 f.write(str(t2-t1))
+f.close()
