@@ -18,11 +18,12 @@ matplotlib.rcParams.update({
     #'ytick.labelsize': 12
 })
 
-data = np.genfromtxt('1.csv', skip_header=1, delimiter=',')
+data = np.genfromtxt('1.csv', delimiter=',')
+
 
 t = np.arange(0,1000)
 plt.plot(t, data[0])
 plt.plot(t, data[1])
-# plt.plot(t, data[2])
+plt.plot(t, data[2])
 
 plt.show()
