@@ -45,7 +45,7 @@ class Reader:
         self.dso.write(':TIM:SCAL 200E-9\n')
         self.dso.readlines()
 
-    def getData(self, channels=[1,2,3]):
+    def getData(self, channels=[1,2,3], save_png=False):
         """
         Gets the data from the number of channels specified, converts to a waveform, and outputs a single array containing all the channels.
 
@@ -53,6 +53,9 @@ class Reader:
         ----------
         channels : list
             List of the channels that data will be taken from. Entries need to be ints.
+        
+        save_png : bool, default=False
+            If set to true, this will save a plot of the waveforms saved to the screenshots folder. This is meant to be used simply for debugging purposes, not actual data analysis
         
         Returns
         -------
@@ -72,6 +75,13 @@ class Reader:
         # Resets the ch_list variable in the self.dso object. Without resetting it will only take 4 waveforms and then break.
         self.dso.resetChList()
 
+        if save_png:
+            t = np.arange(0,self.dso.points_num)
+            for c in channels:
+                plt.plot(t, waveforms[c-1])
+            
+            plt.savefig('oscilloscopeRead/screenshots/testplot.png')
+                
         return np.array(waveforms)
 
     def takeScreenshot(self):
