@@ -4,12 +4,12 @@ Contains the files modified and created by Miles Kidson for the ALICE TRD lab fo
 The basis of these programs comes from [OpenWave-1KB](https://github.com/tdietel/OpenWave-1KB), but many of the modules taken from that have been modified heavily, both for fixing as some didn't work, and for new purposes. The main goal of this section was to get the interface between TRD computer and oscilloscope working nicely. This has, for the most part, been achieved but there are still a few kinks in the process (namely the fact that the oscilloscope occasionally spits out data in the wrong format, which messes everything up. See line 297 of `dso1kb.py`). 
 
 ## Installation
-The package `oscilloscopeRead` is where the magic happens. Make sure to run `pip install -r requirements.txt`, and to be safe I would recommend doing this in a virtual environment. To create the virtual environment run
+The package `oscilloscopeRead` is where the magic happens. I would recommend doing everything in a virtual environment. To create the virtual environment run
 ```bash
-python3 -m venv {venv name}
-. {venv name}/bin/activate
-pip install --upgrade pip
-pip install -e oscilloscopeRead
+$ python3 -m venv {venv name}
+$ . {venv name}/bin/activate
+$ pip install --upgrade pip
+$ pip install -e oscilloscopeRead
 ```
 The environment can then be accessed by running `. {venv name}/bin/activate` in the directory the previous commands were run in.
 When you want to get data from the oscilloscope, a `scopeRead.Reader` object must be created with the argument being the device name. The method `getData()` can be called on this object and the output assigned to a variable. The method takes an array of integers from 1 to 4 denoting the channels that data will be taken from, but the default is the first 3 channels. The output is a numpy array of the waveforms from each channel, one after the other, in voltages. The time between data points should be 4 ns but this could change. See below how to check this value.
