@@ -43,7 +43,7 @@ class Reader:
         self.dso.write(':ACQ:RECO 1E3\n')
         self.dso.write(':TIM:POS 0\n')
         self.dso.write(':TIM:SCAL 200E-9\n')
-        self.dso.readlines()
+        self.dso.clearBuf()
 
     def getData(self, channels=[1,2,3], save_png=False):
         """

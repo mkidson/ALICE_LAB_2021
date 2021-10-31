@@ -38,6 +38,7 @@ There are some strange quirks when it comes to interfacing with the oscilloscope
     dso.read()
     ```
     and the number following "Sampling Period" near the end of the output *should* be the spacing.
+- A weird quirk that I ran into a few times was any program that was using `scopeRead.py` was not able to connect to the oscilloscope even though everything was connected correctly. I think this happened after turning the oscilloscope off and then on again, but it might have just been randomly. To fix this I found it easiest to start a python interpreter session by running `$ python3` and then manually importing `scopeRead`, creating a Reader object, and then exiting. 
 
 ## Final housekeeping
 The programs in the `not vital` folder are the programs I created while trying to understanding what was needed in this process. Some might be useful, such as `timeResolution.py`, but I am fairly sure most of them will not need to be used again. The sub-folder `old` has programs from previous years that were used for debugging and inspiration, but are all pretty much useless now.
