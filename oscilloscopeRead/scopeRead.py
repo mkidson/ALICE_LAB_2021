@@ -35,7 +35,6 @@ class Reader:
         self.dso.write(':CHAN2:SCAL 2E-1\n')
         self.dso.write(':CHAN3:SCAL 2E0\n')
         self.dso.write(':CHAN4:SCAL 2E-1\n')
-        self.dso.write(':CHAN4:POS 6E0\n')
         self.dso.write(':TRIG:SOUR CH3\n')
         self.dso.write(':TRIG:LEV 1.2E\n')
         self.dso.write(':TRIG:EDG:SLOP RIS\n')
@@ -51,7 +50,7 @@ class Reader:
 
         Parameters
         ----------
-        channels : list
+        channels : list, default=[1,2,3]
             List of the channels that data will be taken from. Entries need to be ints.
         
         save_png : bool, default=False

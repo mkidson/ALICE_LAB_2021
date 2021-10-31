@@ -17,7 +17,14 @@ When you want to get data from the oscilloscope, a `scopeRead.Reader` object mus
 ## Extra notes
 There are some strange quirks when it comes to interfacing with the oscilloscope. I hope that for the most part this will not need to be done in the future, but in the event that you do need to change settings remotely, here are some tips:
 - We found the ethernet interface much slower and more buggy than the USB interface, so we strongly recommending USB.
-- The USB device name, which needs to be fed to either `scopeRead.Reader('{device name}')` or `dso1kb.Dso('dev\{device name}')`, can be found by running `dmesg` in the linux commandline after plugging the oscilloscope in and looking for something that looks like `ttyACM1` in the line `cdc_acm 3-8:2.0: {name}: USB ACM device`.
+- The USB device name, which needs to be fed to either `scopeRead.Reader('{device name}')` or `dso1kb.Dso('dev\{device name}')`, can be found by running `dmesg` in the linux command line after plugging the oscilloscope in and looking for something that looks like 
+    ```
+    [125714.945441] usb 3-8: Product: IDS-1074B
+    [125714.945443] usb 3-8: Manufacturer: RS
+    [125714.945444] usb 3-8: SerialNumber: 631D108G1
+    [125714.956492] cdc_acm 3-8:2.0: ttyACM2: USB ACM device
+    ```
+    `ttyACM1` is the device name.
 - The commands for the oscilloscope and what they do can be found in the Programming Manual in the Downloads section of [https://www.gwinstek.com/en-global/products/detail/GDS-1000B].
 - I found it easiest to pass commands to the oscilloscope by running a python environment in the package directory, then doing 
     ```python
