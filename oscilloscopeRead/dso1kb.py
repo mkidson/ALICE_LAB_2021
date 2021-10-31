@@ -346,7 +346,7 @@ class Dso:
                 fWave[x] = float(self.iWave[chPos][i])*dv
         return fWave
 
-    def readRawDataFile(self,  fileName): ## Fairly redundant for our usage. I really don't know how it works so good luck if you decide to use it.
+    def readRawDataFile(self,  fileName):
         # Checks file format (csv or lsf)
         self.info = [[], [], [], []]
         if (fileName.lower().endswith('.csv')):

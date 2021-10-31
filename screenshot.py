@@ -4,7 +4,7 @@ Takes a screeshot of the current oscilloscope screen and saves it to the folder 
 """
 import oscilloscopeRead.scopeRead
 
-scope = oscilloscopeRead.scopeRead.reader('ttyACM2')
+scope = oscilloscopeRead.scopeRead.Reader('ttyACM2')
 
 scope.takeScreenshot()
 
