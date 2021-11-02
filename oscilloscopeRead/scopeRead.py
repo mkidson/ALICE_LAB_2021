@@ -41,7 +41,7 @@ class Reader:
         self.dso.write(':TRIG:MOD NORM\n')
         self.dso.write(':ACQ:RECO 1E3\n')
         self.dso.write(':TIM:POS 0\n')
-        self.dso.write(':TIM:SCAL 200E-9\n')
+        self.dso.write(':TIM:SCAL 100E-8\n')
         self.dso.clearBuf()
 
     def getData(self, channels=[1,2,3], save_png=False):
