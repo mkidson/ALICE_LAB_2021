@@ -10,6 +10,7 @@ The details of what these commands do can be found in the Programming Manual in 
 import oscilloscopeRead.dso1kb
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 class Reader:
     """
@@ -17,15 +18,23 @@ class Reader:
 
     Parameters
     ----------
-    interface : str
-        The device name in the system. This is usually 'ttyACM1' or something similar. The actual value can be found by running
+    interface : str, default=None
+        The device name in the system. If left empty, defaults to None, which makes the program search for the name itself by looking for the latest instance of the serial number being displayed in $ dmesg. If this doesn't work, get the name manually as described below:
+        The name is usually 'ttyACM1' or something similar. The actual value can be found by running
         $ dmesg 
         after plugging the scope into a USB port and looking for the entry with "Product: IDS-1074B". It should show the device name in the line that reads
         "cdc_acm 3-8:2.0: {name}: USB ACM device"
 
     """
-    def __init__(self, interface):
-        self.dso = oscilloscopeRead.dso1kb.Dso(f'/dev/{interface}')
+    def __init__(self, interface=None):
+        if interface==None:
+            self.interface = os.popen('dmesg | grep -A 1 631D108G1 | tail -1 | grep -E -o "tty.{0,4}"').read()[:-1]
+        else:
+            self.interface = interface
+
+            
+
+        self.dso = oscilloscopeRead.dso1kb.Dso(f'/dev/{self.interface}')
         # Sets the scope to the right settings 
         self.dso.write(':CHAN1:DISP ON\n')
         self.dso.write(':CHAN2:DISP ON\n')
